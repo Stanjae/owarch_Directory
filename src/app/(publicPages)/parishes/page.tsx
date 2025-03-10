@@ -14,7 +14,7 @@ const page = async() => {
         placeHolder='Filter a Deanary'/>}
         options2={<CSelectInput param='type' width='w-[150px]' label='All Types' selectArray={parishTypes}  
         placeHolder='Select a Type'/>}
-        search={ <CSearchBar placeholder='Search for a Parish'/>}
+        search={<Suspense><CSearchBar placeholder='Search for a Parish'/></Suspense> }
         sort={<CSort/>}
         clear={<CClearBtn options1='type' options2='deanary' options3='sort'/>}
         />
