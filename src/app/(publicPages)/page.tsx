@@ -10,6 +10,7 @@ import React, { Suspense } from 'react'
 const page = async() => {
   return (
     <main>
+      <Suspense>
         <CSearchBox options={<CSelectInput param='position' width='w-[200px]' label='All Positions' selectArray={priestsFIlter}  
         placeHolder='Filter a Position'/>}
         options2={<CSelectInput param='title' width='w-[150px]' label='All Titles' selectArray={priestTitles}  
@@ -18,6 +19,8 @@ const page = async() => {
         sort={<CSort/>}
         clear={<CClearBtn options1='position' options3='sort' options2='title'/>}
         />
+      </Suspense>
+        
 
         <Suspense>
           <PriestsDirectory/>
