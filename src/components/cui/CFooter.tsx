@@ -23,7 +23,7 @@ const CFooter = () => {
                         <p className=' text-[#cac2c0] text-wrap leading-[26.56px]'>Catholic Archdiocesan Secretariat —
                             <br/>Villa Assumpta,Owerri, Imo State, Nigeria</p>
                         <div className=' flex gap-2 items-center'>
-                            {socials.map((i,j) => <Button className=' p-5 rounded-full bg-transparent' variant={'outline'} key={j}>{i.icon}</Button>)}
+                            {socials.map((i,j) => <Button suppressHydrationWarning className=' p-5 rounded-full bg-transparent' variant={'outline'} key={j}>{i.icon}</Button>)}
                         </div>
                     </div>
 
