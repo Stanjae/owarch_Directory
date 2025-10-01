@@ -31,7 +31,7 @@ const ParishDirectory = () => {
   return (
     <main>
         <section className=' mx-auto max-w-8xl'>
-                <div className=' p-2 flex justify-center gap-5'>
+                <div className=' p-2 flex justify-center gap-5 items-center flex-wrap'>
                     {alphaBets.map(alpha => <Button onClick={()=> setHash(alpha.title)} asChild className={` text-dbrown`} variant={hash == alpha.title ? "default":'outline'} key={alpha.value}>
                         <Link href={`#${alpha.title}`}>{alpha.title}</Link></Button>)}
                 </div>
