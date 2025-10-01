@@ -5,14 +5,22 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import { ParishType } from "@/utils/definitions";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ParishCard from "./ParishCard";
 import LogoLoader from "./LogoLoader";
 import CErrorState from "./CErrorState";
+import { EmptyStateTypes } from "@/types/types";
+import EmptyState from "./EmptyState";
+import { emptyStates } from "@/constants/emptyStates";
 
 const ParishDirectory = () => {
-  const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
+      const pathname = usePathname();
+      const { replace } = useRouter();
+     const [empty, setEmpty] = React.useState<EmptyStateTypes | undefined>(
+        undefined
+      );
 
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: [
@@ -31,17 +39,47 @@ const ParishDirectory = () => {
       ),
   });
 
-  const [hash, setHash] = React.useState("");
+    const [hash, setHash] = React.useState("");
+    
+      const handleClear = () => {
+        const params = new URLSearchParams(searchParams);
+        params.delete("type");
+        params.delete("query");
+        params.delete("sort");
+        params.delete("deanary");
+        replace(`${pathname}?${params.toString()}`);
+      };
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setHash(window.location.hash.slice(1)); // Remove the '#' symbol
     }
   }, []);
+    
+      useEffect(() => {
+        if (
+          searchParams.get("query")?.toString() &&
+          data?.length == 0
+        ) {
+          setEmpty({ ...emptyStates[0], buttonAction: handleClear });
+          return;
+        }
+    
+        if (data?.length == 0) {
+          setEmpty(emptyStates[1]);
+          return;
+        }
+        setEmpty(undefined);
+      }, [searchParams.get("query"), data]);
 
   return (
     <main>
-      <section className=" mx-auto max-w-8xl">
+          <section className=" mx-auto max-w-8xl">
+                <EmptyState
+                      searchQuery={searchParams.get("query")?.toString()}
+                      empty={empty}
+                    />
         <div className=" p-2 flex  gap-4 items-center flex-wrap">
           {alphaBets.map((alpha) => (
             <Button
